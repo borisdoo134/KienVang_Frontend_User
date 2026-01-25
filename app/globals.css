@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+:root {
+  /* Nền tối màu nâu vàng để tạo độ sâu */
+  --background: #2c1a05;
+  /* Chữ màu kem sáng thay vì trắng tinh để hợp với vàng */
+  --foreground: #fffbeb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+/* --- 1. NỀN MESH GRADIENT VÀNG ẤM (Golden Liquid Background) --- */
+body {
+  background-color: var(--background);
+  min-height: 100vh;
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+
+  /* Nền tĩnh: Gradient nâu vàng sâu thẳm */
+  background-image:
+    radial-gradient(at 50% 0%, #45270a 0, transparent 70%),
+    radial-gradient(at 100% 100%, #3f2305 0, transparent 70%);
+}
+
+/* Các quả cầu ánh sáng VÀNG di chuyển */
+body::before {
+  content: "";
+  position: fixed;
+  top: -20%;
+  left: -20%;
+  right: -20%;
+  bottom: -20%;
+  background: 
+    /* Đốm 1: Vàng sáng chủ đạo (Golden Yellow) */
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(251, 191, 36, 0.5),
+      transparent 50%
+    ),
+    /* Đốm 2: Cam hổ phách đậm (Deep Amber) tạo chiều sâu */
+    radial-gradient(circle at 70% 60%, rgba(217, 119, 6, 0.4), transparent 50%),
+    /* Đốm 3: Vàng kem nhẹ nhàng (Soft Cream Gold) */
+    radial-gradient(
+        circle at 40% 80%,
+        rgba(253, 230, 138, 0.3),
+        transparent 50%
+      );
+  filter: blur(90px); /* Làm nhòe cực mạnh */
+  z-index: -1;
+  animation: bg-shift-gold 12s infinite alternate ease-in-out;
+}
+
+@keyframes bg-shift-gold {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+/* --- 2. BỘ UI LIQUID GLASS (Phiên bản Ám Vàng) --- */
+
+/* PANEL CHÍNH */
+.glass-panel {
+  @apply relative overflow-hidden rounded-[40px];
+
+  /* Nền kính ám vàng nhẹ */
+  background: rgba(255, 247, 237, 0.05);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+
+  /* Viền và ánh sáng ám vàng */
+  border: 1px solid rgba(251, 191, 36, 0.2); /* Viền vàng nhẹ */
+  box-shadow:
+    inset 0 1px 1px 0 rgba(253, 230, 138, 0.5),
+    /* Cạnh trên sáng vàng kem */ inset 0 -1px 1px 0 rgba(69, 39, 10, 0.2),
+    /* Cạnh dưới tối màu nâu */ 0 25px 50px -12px rgba(28, 16, 2, 0.5); /* Bóng đổ sâu màu nâu đen */
+}
+
+/* INPUT: Khắc sâu xuống nền vàng */
+.glass-input {
+  @apply w-full px-5 py-4 rounded-2xl outline-none text-white placeholder-white/50 transition-all;
+
+  /* Nền tối màu nâu vàng */
+  background: rgba(41, 25, 6, 0.4);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(251, 191, 36, 0.2); /* Viền đáy sáng vàng */
+
+  border: 1px solid transparent;
+  color: #fffbeb; /* Màu chữ kem sáng */
+}
+.glass-input::placeholder {
+  color: rgba(255, 251, 235, 0.5);
+}
+.glass-input:focus {
+  background: rgba(69, 39, 10, 0.5);
+  border-color: rgba(251, 191, 36, 0.4); /* Focus viền vàng rõ hơn */
+}
+
+/* BUTTON: Nút bấm như khối thạch anh vàng */
+.glass-btn {
+  @apply w-full py-4 rounded-2xl font-bold text-[#2c1a05] transition-all duration-300;
+
+  /* Gradient vàng rực rỡ */
+  background: linear-gradient(
+    180deg,
+    rgba(251, 191, 36, 0.9) 0%,
+    rgba(245, 158, 11, 0.8) 100%
+  );
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(253, 230, 138, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    /* Highlight đỉnh trắng để tạo độ bóng */ 0 4px 15px rgba(245, 158, 11, 0.4); /* Bóng đổ phát sáng màu cam vàng */
+}
+
+.glass-btn:hover {
+  background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 10px 25px rgba(245, 158, 11, 0.5);
+}
+
+.glass-btn:active {
+  transform: translateY(1px);
+  background: #b45309;
+}
