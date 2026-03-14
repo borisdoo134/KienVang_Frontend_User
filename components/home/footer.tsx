@@ -15,7 +15,14 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Image from "next/image";
 
-const Footer = () => {
+const Footer = ({ systemData }: { systemData: SystemResponse[] }) => {
+  const settings = systemData.reduce(
+    (acc, curr) => {
+      acc[curr.settingKey] = curr.settingValue;
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
   return (
     <Box
       component="footer"
@@ -171,7 +178,7 @@ const Footer = () => {
               <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.5 }}>
                 <LocationOnIcon sx={{ color: "#FFC107", mt: 0.5 }} />
                 <Typography variant="body2" sx={{ color: "#cbd5e1" }}>
-                  123 Đường Cầu Giấy, Phường Quan Hoa, Quận Cầu Giấy, Hà Nội
+                  {settings.ADDRESS}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -180,13 +187,13 @@ const Footer = () => {
                   variant="body2"
                   sx={{ color: "#cbd5e1", fontWeight: 700 }}
                 >
-                  0988.xxx.xxx
+                  {settings.PHONE}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
                 <EmailIcon sx={{ color: "#FFC107" }} />
                 <Typography variant="body2" sx={{ color: "#cbd5e1" }}>
-                  hotro@kienvang.vn
+                  {settings.EMAIL}
                 </Typography>
               </Box>
             </Box>
@@ -204,7 +211,8 @@ const Footer = () => {
           }}
         >
           <Typography variant="body2" sx={{ color: "#94a3b8" }}>
-            © {new Date().getFullYear()} Kiến Vàng. All rights reserved.
+            © {new Date().getFullYear()} {settings.COMPANY_NAME}. All rights
+            reserved.
           </Typography>
         </Box>
       </Container>

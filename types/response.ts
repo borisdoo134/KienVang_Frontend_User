@@ -32,4 +32,14 @@ declare global {
         active: boolean;
         role: string;
     }
+
+    interface SystemResponse {
+        settingKey: string;
+        settingValue: string;
+    }
+
+    interface CustomerAmount {
+        amounts: number;
+        urlAvatars: string[]
+    }
 }

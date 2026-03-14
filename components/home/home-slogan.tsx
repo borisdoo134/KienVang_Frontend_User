@@ -5,8 +5,9 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Divider from "@mui/material/Divider";
 
 import Image from "next/image";
+import { storageUrl } from "@/utils/url";
 
-const HomeSlogan = () => {
+const HomeSlogan = ({ accountAmounts }: { accountAmounts: CustomerAmount }) => {
   return (
     <Box
       sx={{
@@ -87,14 +88,18 @@ const HomeSlogan = () => {
           </Button>
         </div>
         <Divider sx={{ width: "90%", paddingTop: "20px" }} />
-        <div className="flex gap-3">
+        <div className="flex gap-3 text-start">
           <AvatarGroup spacing="small">
-            <Avatar alt="Remy Sharp" src="/images/traidep.jpg" />
-            <Avatar alt="Remy Sharp" src="/images/traidep2.jpg" />
-            <Avatar alt="Remy Sharp" src="/images/traidep3.jpg" />
+            {accountAmounts.urlAvatars.map((url, index) => (
+              <Avatar
+                key={index}
+                alt={`Avatar ${index + 1}`}
+                src={`${storageUrl}/images/${url}`}
+              />
+            ))}
           </AvatarGroup>
           <p className="font-bold">
-            10,000+ khách hàng <br />{" "}
+            {accountAmounts.amounts} Quý khách hàng <br />{" "}
             <span className="font-thin text-sm">Đã tin tưởng và hài lòng</span>
           </p>
         </div>

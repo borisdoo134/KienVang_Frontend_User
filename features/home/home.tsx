@@ -6,7 +6,13 @@ import WhyChoiceUs from "@/components/home/home-why-choice";
 import { Box } from "@mui/material";
 import React from "react";
 
-const Home = () => {
+const Home = ({
+  systemData,
+  accountAmounts,
+}: {
+  systemData: SystemResponse[];
+  accountAmounts: CustomerAmount;
+}) => {
   return (
     <Box
       sx={{
@@ -18,11 +24,11 @@ const Home = () => {
         minHeight: "100vh",
       }}
     >
-      <HomeSlogan />
+      <HomeSlogan accountAmounts={accountAmounts} />
       <HomeBanner />
       <HomeNotificationSlider />
       <WhyChoiceUs />
-      <Footer />
+      <Footer systemData={systemData} />
     </Box>
   );
 };
