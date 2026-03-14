@@ -1,16 +1,29 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
-import { Quicksand } from 'next/font/google';
+import { Quicksand, Archivo, Inter } from 'next/font/google';
 
 export const quicksand = Quicksand({
-    subsets: ['latin'],
+    subsets: ['latin', 'vietnamese'],
     weight: ['300', '400', '500', '600', '700'],
     display: 'swap',
-    variable: '--font-quicksand'
+});
+
+export const archivo = Archivo({
+    subsets: ['latin', 'vietnamese'],
+    display: 'swap',
+});
+
+export const inter = Inter({
+    subsets: ['latin', 'vietnamese'],
+    display: 'swap',
 });
 
 const theme = createTheme({
     palette: {
+        background: {
+            default: '#FFFFFF', 
+            paper: '#ffffff'    // (Tùy chọn) Màu nền cho các component nổi như Card, Dialog, Menu...
+        },
         secondary: {
             main: '#f8f9fa'
         },
@@ -20,7 +33,7 @@ const theme = createTheme({
         warning: {
             main: '#00c951'
         },
-        mode: 'dark'
+        mode: 'light'
     },
     typography: {
         fontFamily: quicksand.style.fontFamily
@@ -34,10 +47,10 @@ const theme = createTheme({
                 contained: ({ ownerState }) =>
                     ownerState.color === 'primary'
                         ? {
-                            backgroundColor: '#0056d2',
+                            backgroundColor: '#FFC107',
                             color: 'white',
                             '&:hover': {
-                                backgroundColor: '#0048b0',
+                                backgroundColor: '#AC7511',
                             }
                         }
                         : (ownerState.color === 'warning') ? {

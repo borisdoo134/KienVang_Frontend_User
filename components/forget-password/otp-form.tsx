@@ -1,0 +1,198 @@
+"use client";
+import { Box, Button, Divider, Typography } from "@mui/material";
+import { SetStateAction, useEffect, useState } from "react";
+import { MuiOtpInput } from "mui-one-time-password-input";
+import Image from "next/image";
+import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
+import { buttonStyle } from "@/utils/auth/buttonStyle";
+import { sendRequest } from "@/utils/fetch.api";
+import { apiUrl } from "@/utils/url";
+import { ForgetPasswordFieldResponse } from "./action";
+
+const OtpForm = ({
+  setStep,
+  forgetPasswordField,
+  setCode,
+}: {
+  setStep: React.Dispatch<SetStateAction<number>>;
+  forgetPasswordField: ForgetPasswordFieldResponse | null;
+  setCode: React.Dispatch<SetStateAction<string>>;
+}) => {
+  const [otp, setOtp] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const handleChange = (newValue: string) => {
+    setOtp(newValue);
+  };
+
+  const [timer, setTimer] = useState<number>(0);
+
+  useEffect(() => {
+    let interval: any;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  const handleResendEmail = async () => {
+    if (timer > 0 || !forgetPasswordField) return;
+    setTimer(60);
+
+    const forgetPasswordRequest: ForgetPasswordRequest = {
+      email: forgetPasswordField?.email.value,
+    };
+
+    await sendRequest<ApiResponse<void>>({
+      url: `${apiUrl}/user/request-reset-password`,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: forgetPasswordRequest,
+    });
+  };
+
+  const handleSubmit = async () => {
+    const checkOtpResponse = await sendRequest<ApiResponse<void>>({
+      url: `${apiUrl}/otp/${otp}`,
+      method: "POST",
+    });
+
+    if (checkOtpResponse.status === 200) {
+      setStep((prev) => prev + 1);
+      setCode(otp);
+    } else {
+      setErrorMessage(checkOtpResponse.message.toString());
+    }
+  };
+
+  return (
+    <Box display="flex" flexDirection="column" gap={2} alignItems="center">
+      <Image src={`/verify.png`} alt="app logo" width={100} height={100} />
+
+      <Typography
+        variant="h6"
+        component="p"
+        sx={{
+          color: "white",
+          textAlign: "center",
+          fontWeight: "bold",
+        }}
+      >
+        Xác Thực Email
+      </Typography>
+
+      <Typography
+        variant="body2"
+        component="p"
+        sx={{
+          color: "white",
+          textAlign: "center",
+          fontWeight: "200",
+        }}
+      >
+        Chúng tôi vừa gửi mã OTP 6 chữ số đến email:{" "}
+        <span className="font-bold text-sm">
+          {forgetPasswordField?.email.value}
+        </span>{" "}
+        vui lòng kiểm tra hòm thư và nhập mã để hoàn tất xác thực!
+      </Typography>
+
+      <MuiOtpInput
+        length={6}
+        value={otp}
+        onChange={handleChange}
+        autoFocus
+        sx={{
+          gap: 1,
+          pb: 3,
+          "& .MuiOutlinedInput-root": {
+            color: "white",
+            bgcolor: "rgba(255,255,255,0.08)",
+            borderRadius: "8px",
+
+            "& fieldset": {
+              borderColor: "rgba(255, 255, 255, 0.3)",
+            },
+            "&:hover fieldset": {
+              borderColor: "rgba(255, 255, 255, 0.5)",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#90caf9",
+              borderWidth: "2px",
+            },
+          },
+          "& .MuiOutlinedInput-input": {
+            caretColor: "white",
+          },
+        }}
+      />
+
+      {errorMessage && (
+        <p className="text-red-500 text-sm mb-3 ml-2 flex items-center gap-x-1">
+          <ErrorOutlineRoundedIcon sx={{ fontSize: "16px" }} />
+          {errorMessage}
+        </p>
+      )}
+
+      <Button
+        fullWidth
+        variant="contained"
+        size="large"
+        type="submit"
+        disabled={otp.length < 6}
+        sx={[
+          buttonStyle,
+          {
+            "&.Mui-disabled": {
+              bgcolor: "rgba(255, 255, 255, 0.5)",
+              color: "rgba(255, 255, 255, 0.5)",
+              cursor: "not-allowed",
+              pointerEvents: "auto",
+            },
+          },
+        ]}
+        onClick={handleSubmit}
+      >
+        Xác thực
+      </Button>
+
+      <Divider
+        sx={{
+          width: "100%",
+          borderColor: "rgba(255, 255, 255, 0.3)",
+          mb: "25px",
+        }}
+      />
+
+      <Typography
+        variant="caption"
+        component="p"
+        sx={{
+          color: "white",
+          textAlign: "center",
+          fontWeight: "200",
+        }}
+      >
+        Không nhận được mã OTP?
+        <span
+          onClick={handleResendEmail}
+          className={`font-bold text-sm ml-1.5 transition-all duration-200 
+      ${
+        timer > 0
+          ? "text-gray-400 cursor-not-allowed pointer-events-none"
+          : "text-red-500 cursor-pointer hover:underline"
+      }
+    `}
+        >
+          {timer > 0 ? `Gửi lại (${timer}s)` : "Gửi lại"}
+        </span>
+      </Typography>
+    </Box>
+  );
+};
+
+export default OtpForm;

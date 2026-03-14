@@ -2,9 +2,9 @@ import NextAuthWrapper from "@/wrapper/next-auth/next.auth.wrapper";
 import ProgressBarWrapper from "@/wrapper/progress-bar/progress.bar.wrapper";
 import { quicksand } from "@/wrapper/theme/theme";
 import ThemeWrapper from "@/wrapper/theme/theme.wrapper";
-import { UserAvatarWrapper } from "@/wrapper/user-avatar/user.avatar.wrapper";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
+import { UserAvatarWrapper } from "@/wrapper/user-avatar/user.avatar.wrapper";
 
 export default function RootLayout({
   children,
@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={quicksand.className}>
+      <body className={quicksand.className} suppressHydrationWarning={true}>
         <AppRouterCacheProvider>
           <ThemeWrapper>
             <NextAuthWrapper>
