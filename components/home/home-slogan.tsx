@@ -12,12 +12,13 @@ const HomeSlogan = ({ accountAmounts }: { accountAmounts: CustomerAmount }) => {
     <Box
       sx={{
         width: "85vw",
-        height: "calc(100vh - 120px)",
+        minHeight: "calc(100vh - 120px)",
         textAlign: "center",
         display: "flex",
         justifyContent: "space-between",
         gap: 3,
         alignItems: "center",
+        paddingY: "40px",
       }}
     >
       <div className="w-[50%] h-full py-4 flex flex-col gap-4">
@@ -105,8 +106,8 @@ const HomeSlogan = ({ accountAmounts }: { accountAmounts: CustomerAmount }) => {
         </div>
       </div>
 
-      <div className="w-[50%] flex flex-col gap-4 h-full py-4">
-        <div className="flex flex-7 gap-4 min-h-0">
+      <div className="w-[50%] flex flex-col gap-4 h-137.5 py-4">
+        <div className="flex flex-7 gap-4 min-h-0 h-2/3">
           <Image
             src="/slogans/slogan1.jpg"
             alt="Skyline"

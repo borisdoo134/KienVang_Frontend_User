@@ -89,7 +89,7 @@ export const validateRegisterForm = async (prev: any, formData: FormData): Promi
     };
 
     const registerResponse = await sendRequest<ApiResponse<void>>({
-        url: `${apiUrl}/user/register-request`,
+        url: `${apiUrl}/account/register-request`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

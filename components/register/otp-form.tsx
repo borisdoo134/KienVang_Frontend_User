@@ -46,7 +46,7 @@ const OtpForm = ({
     };
 
     await sendRequest<ApiResponse<void>>({
-      url: `${apiUrl}/user/request-register`,
+      url: `${apiUrl}/account/request-register`,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const OtpForm = ({
 
   const handleSubmit = async () => {
     const activeResponse = await sendRequest<ApiResponse<void>>({
-      url: `${apiUrl}/user/active/${otp}`,
+      url: `${apiUrl}/account/active/${otp}`,
     });
 
     if (activeResponse.status === 200) {

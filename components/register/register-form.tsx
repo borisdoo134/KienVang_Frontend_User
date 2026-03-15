@@ -13,7 +13,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { glassTextFieldStyle } from "@/utils/auth/formStyles";
 import { buttonStyle } from "@/utils/auth/buttonStyle";
-import { SetStateAction, useActionState, useState } from "react";
+import { SetStateAction, useActionState, useEffect, useState } from "react";
 import { RegisterFieldResponse, validateRegisterForm } from "./action";
 
 const RegisterForm = ({
@@ -39,6 +39,13 @@ const RegisterForm = ({
     validateRegisterForm,
     registerField,
   );
+
+  useEffect(() => {
+    if (state?.ok) {
+      setRegisterField(state);
+      setStep(2);
+    }
+  }, [state, setStep, setRegisterField]);
 
   return (
     <Box>
