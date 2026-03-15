@@ -13,7 +13,6 @@ const Register = () => {
   const totalSteps = 4;
   const [registerField, setRegisterField] =
     useState<RegisterFieldResponse | null>(null);
-  console.log(">>>check step: ", step);
   return (
     <Box
       sx={{

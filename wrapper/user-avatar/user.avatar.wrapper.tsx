@@ -11,9 +11,9 @@ import {
 
 interface IUserAvatar {
   avatarSrc: string;
-  fullname: string;
+  name: string;
   setAvatarSrc: Dispatch<SetStateAction<string>>;
-  setFullname: Dispatch<SetStateAction<string>>;
+  sename: Dispatch<SetStateAction<string>>;
 }
 
 const UserAvatarContext = createContext<IUserAvatar | null>(null);
@@ -26,25 +26,25 @@ export const UserAvatarWrapper = ({
   const { data: session } = useSession();
 
   const [customAvatar, setCustomAvatar] = useState<string | null>(null);
-  const [customFullname, setCustomFullname] = useState<string | null>(null);
+  const [custoname, setCustoname] = useState<string | null>(null);
 
   const defaultAvatar = session?.user?.avatar
     ? session.user.avatar.startsWith("http")
       ? session.user.avatar
-      : `${storageUrl}/avatar/${session.user.avatar}`
+      : `${storageUrl}/images/avatars/${session.user.avatar}`
     : "";
 
-  const defaultFullname = session?.user?.fullname || "";
+  const defaultName = session?.user?.name || "";
 
   const avatarSrc = customAvatar !== null ? customAvatar : defaultAvatar;
-  const fullname = customFullname !== null ? customFullname : defaultFullname;
+  const name = custoname !== null ? custoname : defaultName;
 
   const handleSetAvatar: Dispatch<SetStateAction<string>> = (value) => {
     setCustomAvatar(typeof value === "function" ? value(avatarSrc) : value);
   };
 
-  const handleSetFullname: Dispatch<SetStateAction<string>> = (value) => {
-    setCustomFullname(typeof value === "function" ? value(fullname) : value);
+  const handleSename: Dispatch<SetStateAction<string>> = (value) => {
+    setCustoname(typeof value === "function" ? value(name) : value);
   };
 
   return (
@@ -52,8 +52,8 @@ export const UserAvatarWrapper = ({
       value={{
         avatarSrc,
         setAvatarSrc: handleSetAvatar,
-        fullname,
-        setFullname: handleSetFullname,
+        name,
+        sename: handleSename,
       }}
     >
       {children}

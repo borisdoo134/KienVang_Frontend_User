@@ -27,13 +27,8 @@ const ForgetPasswordForm = ({
   );
 
   useEffect(() => {
-    console.log("State hiện tại:", state); // Kiểm tra state trả về từ Server Action
-
     if (state && state.email) {
-      console.log("Kiểm tra email error:", state.email.error);
-
       if (state.email.error === false) {
-        console.log("Đang chuyển sang Step 2...");
         setForgetPasswordField(state);
         setStep(2);
       }

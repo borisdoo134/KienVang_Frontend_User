@@ -46,6 +46,8 @@ const LoginForm = () => {
           if (!emailInput.includes("@")) {
             emailInput += "@gmail.com";
           }
+          console.log(">>>check ", emailInput);
+          console.log(">>>check2 ", state.password?.value);
 
           const response = await signIn("credentials", {
             email: emailInput,

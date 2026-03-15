@@ -21,7 +21,7 @@ declare global {
 
     
     interface SocialsLoginRequest {
-        fullname: string;
+        name: string;
         avatar: string;
         email: string;
         accountType: string;

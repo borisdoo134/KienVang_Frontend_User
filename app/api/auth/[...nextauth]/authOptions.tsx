@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
 
         if (credentialsLoginResponse.status === 200) {
           const user: User = {
-            id: credentialsLoginResponse.data.user.userId.toString(),
+            id: credentialsLoginResponse.data.user.accountId.toString(),
             user: credentialsLoginResponse.data.user,
             accessToken: credentialsLoginResponse.data.accessToken,
             expireAt: credentialsLoginResponse.data.expireAt,
@@ -81,7 +81,7 @@ export const authOptions: AuthOptions = {
         if (account?.provider !== "credentials") {
           const request: SocialsLoginRequest = {
             email: user.email ?? "",
-            fullname: user.name ?? "",
+            name: user.name ?? "",
             avatar: user.image ?? "",
             accountType: account?.provider.toUpperCase() ?? "",
           };
@@ -115,7 +115,7 @@ export const authOptions: AuthOptions = {
         }
       } else if (trigger === "update") {
         if (session) {
-          token.user.fullname = session.user.fullname;
+          token.user.name = session.user.name;
           token.user.dob = session.user.dob;
           token.user.gender = session.user.gender;
           token.user.avatar = session.user.avatar;
@@ -136,7 +136,7 @@ export const authOptions: AuthOptions = {
       }
       if (trigger === "update") {
         if (newSession) {
-          session.user.fullname = newSession.user.fullname;
+          session.user.name = newSession.user.name;
           session.user.dob = newSession.user.dob;
           session.user.gender = newSession.user.gender;
           session.user.avatar = newSession.user.avatar;

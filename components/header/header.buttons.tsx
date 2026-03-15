@@ -9,7 +9,7 @@ import NotificationButton from "@/features/notification/notification.button";
 const HeaderButtons = () => {
   const { status } = useSession();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const { avatarSrc, fullname } = useUserAvatar();
+  const { avatarSrc, name } = useUserAvatar();
 
   const handleSavePrevUrl = (linkTo: string) => {
     if (!window.location.pathname.includes(linkTo)) {
@@ -28,7 +28,7 @@ const HeaderButtons = () => {
             sx={{ cursor: "pointer" }}
             src={avatarSrc}
           >
-            {fullname.charAt(0).toUpperCase()}
+            {name.charAt(0).toUpperCase()}
           </Avatar>
           <AccountMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
         </>

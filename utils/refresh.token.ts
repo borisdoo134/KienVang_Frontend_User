@@ -22,7 +22,6 @@ export const letRefreshToken = async (token: JWT): Promise<JWT> => {
             }
         })
         if (response.status === 200) {
-            console.log(">>> refresh token successfully!");
             return {
                 ...token,
                 accessToken: response.data.accessToken,

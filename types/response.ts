@@ -14,23 +14,24 @@ declare global {
     }   
     
      interface LoginResponse {
-        user: UserResponse;
+        user: AccountResponse;
         accessToken: string;
         expireAt: string;
         refreshToken: string;
     }
 
-      interface UserResponse {
-        userId: number;
+      interface AccountResponse {
+        accountId: number;
         phone: string;
         avatar: string;
-        fullname: string;
+        name: string;
         email: string;
         gender: string;
         dob: string;
         accountType: string;
         active: boolean;
-        role: string;
+        roleName: string;
+        position: string;
     }
 
     interface SystemResponse {

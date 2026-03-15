@@ -95,7 +95,7 @@ const HomeSlogan = ({ accountAmounts }: { accountAmounts: CustomerAmount }) => {
               <Avatar
                 key={index}
                 alt={`Avatar ${index + 1}`}
-                src={`${storageUrl}/images/${url}`}
+                src={`${storageUrl}/images/avatars/${url}`}
               />
             ))}
           </AvatarGroup>
